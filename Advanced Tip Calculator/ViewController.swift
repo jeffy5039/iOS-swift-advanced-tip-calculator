@@ -10,16 +10,30 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var mealCostTextField: UITextField!
+    @IBOutlet weak var foodScoreSlider: UISlider!
+    @IBOutlet weak var serviceScoreSlider: UISlider!
+    @IBOutlet weak var tipAnswerLabel: UILabel!
+    var tipPercent: Float = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func calculateTipButton(sender: AnyObject) {
+        calculateTipPercent()
+        calculateTip()
     }
-
-
+    func calculateTipPercent() {
+        tipPercent = (foodScoreSlider.value + serviceScoreSlider.value)/10
+    }
+    func calculateTip() {
+        var mealCostAsNSString: NSString = mealCostTextField.text
+        var mealCost = mealCostAsNSString.floatValue
+        var ans = mealCost * tipPercent
+        
+        tipAnswerLabel.text = "$" + NSString(format: "%0.2f", ans)
+        tipAnswerLabel.hidden = false
+    }
 }
 
